@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { Product } from 'src/app/models/product.type';
@@ -8,13 +8,18 @@ import { Product } from 'src/app/models/product.type';
 })
 export class ProductService {
 
-  private baseUrl = 'http://localhost:8080/api/products?size=100'
+  private baseUrl = 'http://localhost:8080/api/products';
+  private categorySearchUri = '/search/findByCategoryId';
   constructor(
     private httpClient: HttpClient
   ) { }
 
-  getProductList(): Observable<Product[]> {
-    return this.httpClient.get<GetResponse>(this.baseUrl).pipe(
+  getProductList(categoryId: number): Observable<Product[]> {
+    const params = new HttpParams()
+    .set('size', 100)
+    .set('id', categoryId)
+    const url = `${this.baseUrl}${this.categorySearchUri}`;
+    return this.httpClient.get<GetResponse>(url, {params: params}).pipe(
       map(res => res._embedded.products)
     );
   }
