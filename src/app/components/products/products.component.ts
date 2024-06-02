@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProductService } from '../services/product/product.service';
-import { Product } from '../models/product.type';
+import { ProductService } from '../../services/product/product.service';
+import { Product } from '../../models/product.type';
 import { ActivatedRoute } from '@angular/router';
 import { ReplaySubject, catchError, of, switchMap, takeUntil, tap } from 'rxjs';
 

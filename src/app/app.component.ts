@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { NxWelcomeComponent } from './nx-welcome.component';
-import { ProductsComponent } from './products/products.component';
+import { ProductsComponent } from './components/products/products.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ProductService } from './services/product/product.service';
+import { ProductCategoryComponent } from './components/product-category/product-category.component';
 
 @Component({
   standalone: true,
@@ -11,6 +12,7 @@ import { ProductService } from './services/product/product.service';
     NxWelcomeComponent,
     RouterModule,
     ProductsComponent,
+    ProductCategoryComponent,
     HttpClientModule
   ],
   providers: [
