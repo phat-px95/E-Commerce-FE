@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductCategory } from 'src/app/models/product-category.type';
 import { ProductService } from 'src/app/services/product/product.service';
@@ -15,7 +15,7 @@ import { ReplaySubject, catchError, of, takeUntil } from 'rxjs';
   templateUrl: './product-category.component.html',
   styleUrl: './product-category.component.css',
 })
-export class ProductCategoryComponent implements OnInit {
+export class ProductCategoryComponent implements OnInit, OnDestroy {
 
   productCategories: ProductCategory[] = [];
   destroyed$ = new ReplaySubject<void>(1);
@@ -25,13 +25,16 @@ export class ProductCategoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.listProductCategories();
+  }
+
+  ngOnDestroy(): void {
     this.destroyed$.next();
     this.destroyed$.complete();
   }
 
   listProductCategories() {
     this.productService.getProductCategories().pipe(
-      // catchError(error => of([] as ProductCategory[])),
+      catchError(error => of([] as ProductCategory[])),
       takeUntil(this.destroyed$)
     ).subscribe(res => {
       this.productCategories = res as ProductCategory[];
